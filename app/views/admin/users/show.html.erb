@@ -1,0 +1,13 @@
+<h1> Welcome to the admin page </h1>
+
+<h2> All Users </h2>
+<hr> 
+
+<% @users.each do |user|%>
+		<h3> User <%=	user.id %> 
+	<h4><%= names_to_string(user.firstname, user.lastname) %></h4>
+	<h4><%= user.email %></h4>
+	
+	<hr>	
+<% end %>
+<%= paginate @users %>

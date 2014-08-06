@@ -1,5 +1,7 @@
 class Movie < ActiveRecord::Base
 
+  attr_accessor :movieposter
+
   has_many :reviews
 
   validates :title,
@@ -14,13 +16,12 @@ class Movie < ActiveRecord::Base
   validates :description,
     presence: true
 
-  validates :poster_image_url,
-    presence: true
-
   validates :release_date,
     presence: true
 
   validate :release_date_is_in_the_future
+
+  mount_uploader :movieposter, MoviePosterUploader
 
   def review_average
     reviews.sum(:rating_out_of_ten)/reviews.size

@@ -2,6 +2,7 @@ class MoviesController < ApplicationController
   
   def index
 		@movies = Movie.all 
+    # @uploader.retrieve_from_store!('my_file.png')
   end
 
   def show
@@ -29,6 +30,7 @@ class MoviesController < ApplicationController
 
   def update 
   	@movie = Movie.find(params[:id])
+    binding.pry
 
   	if @movie.update_attributes(movie_params)
   		redirect_to movie_path(@movie)
@@ -48,7 +50,7 @@ class MoviesController < ApplicationController
 
   def movie_params
   	params.require(:movie).permit(
-  		:title, :release_date, :director, :runtime_in_minutes, :poster_image_url, :description
+  		:title, :release_date, :director, :runtime_in_minutes, :poster_image_url, :description, :movieposter
   		)
   end
 
