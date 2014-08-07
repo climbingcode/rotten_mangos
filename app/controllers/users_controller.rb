@@ -21,7 +21,7 @@ class UsersController < ApplicationController
 
   def destroy 
     user = User.find(params[:id].to_i)
-    # user.delete
+    user.delete
     UserMailer.delete_email(user).deliver
     redirect_to admin_users_path
   end

@@ -13,7 +13,7 @@ Rails.application.routes.draw do
   end
   
 
-  resources :sessions, only: [:new, :create, :destroy]
+  resource :session, only: [:new, :create, :destroy]
 
 
   # resources :reviews, only: [:new, :create]
