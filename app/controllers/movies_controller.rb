@@ -1,7 +1,8 @@
 class MoviesController < ApplicationController
   
   def index
-		@movies = Movie.all 
+		@movies = Movie.search(params)
+
     # @uploader.retrieve_from_store!('my_file.png')
   end
 

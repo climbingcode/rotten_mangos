@@ -1,3 +1,14 @@
+
+<%= form_tag movies_path, :method => 'get' do %>
+
+	<p><%= select_tag :category, options_for_select(["any",'Director', 'Title']) %>
+		<%= select_tag :runtime, options_for_select([["any", "any"], ["Under 90 min", "0 90"], ["Between 90 and 120 minutes", "91 120", ], ["Over 120 minutes", "121 1000"]])%>
+		<%= text_field_tag	:search, params[:search] %>
+		<%= submit_tag "Search", :name => nil %>
+	</p>
+<% end %>
+
+
 <h1>Rotten Mangoes</h1>
 <%= link_to "Submit a movie!", new_movie_path %>
 <hr>

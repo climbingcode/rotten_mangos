@@ -17,6 +17,31 @@ class UsersController < ApplicationController
 
   def show
     
+  end
+
+  def destroy 
+    user = User.find(params[:id].to_i)
+    # user.delete
+    UserMailer.delete_email(user).deliver
+    redirect_to admin_users_path
+  end
+
+
+  def update
+    @user = User.find(params[:id].to_i)
+    @user.update_attributes(
+      email: params[:user][:email],
+      firstname: params[:user][:firstname],
+      lastname: params[:user][:lastname]
+      ) 
+
+    if params[:admin] == "1"
+        @user.admin = true
+    end 
+    @user.save
+
+    
+    redirect_to admin_users_path
 
   end
 

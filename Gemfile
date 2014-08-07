@@ -35,6 +35,13 @@ gem 'pry'
 
 gem 'kaminari'
 
+gem 'faker'
+
+
+group :development do
+	gem "binding_of_caller"
+  gem "better_errors"
+end
 # Use unicorn as the app server
 # gem 'unicorn'
 

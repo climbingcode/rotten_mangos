@@ -27,6 +27,26 @@ class Movie < ActiveRecord::Base
     reviews.sum(:rating_out_of_ten)/reviews.size
   end
 
+
+  def self.search(params)
+    @search = Movie.all
+    if (params[:category] == "Title") && (params[:search].present?)
+      search = @search.where('title LIKE ?', "%#{params[:search]}%")
+      if params[:runtime] != "any"
+        return search.where('runtime_in_minutes BETWEEN ? AND ?', "#{params[:runtime].split.first.to_i}","#{params[:runtime].split.last.to_i}") if params[:runtime] != "any"
+      end
+      return search
+    elsif (params[:category] == "Director") && (params[:search].present?)
+      search = @search.where('director LIKE ?', "%#{params[:search]}%")
+      if params[:runtime] != "any"
+        return search.where('runtime_in_minutes BETWEEN ? AND ?', "#{params[:runtime].split.first.to_i}","#{params[:runtime].split.last.to_i}")  
+      end  
+      return search
+    else
+     search = @search.where('title OR director LIKE ?', "%#{params[:search]}%")
+    end
+  end
+
   protected
 
   def release_date_is_in_the_future
