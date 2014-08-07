@@ -21,6 +21,10 @@ class Movie < ActiveRecord::Base
 
   validate :release_date_is_in_the_future
 
+  scope :category_search, ->(search_type) { where('title LIKE ? OR director LIKE ?' , "%#{search_type}%", "%#{search_type}%") } 
+
+  scope :runtime, ->(runtime) { where('runtime_in_minutes BETWEEN ? AND ?', "#{runtime.split.first.to_i}","#{runtime.split.last.to_i}") }
+
   mount_uploader :movieposter, MoviePosterUploader
 
   def review_average
@@ -29,22 +33,22 @@ class Movie < ActiveRecord::Base
 
 
   def self.search(params)
-    @search = Movie.all
-    if (params[:category] == "Title") && (params[:search].present?)
-      search = @search.where('title LIKE ?', "%#{params[:search]}%")
-      if params[:runtime] != "any"
-        return search.where('runtime_in_minutes BETWEEN ? AND ?', "#{params[:runtime].split.first.to_i}","#{params[:runtime].split.last.to_i}") if params[:runtime] != "any"
-      end
-      return search
-    elsif (params[:category] == "Director") && (params[:search].present?)
-      search = @search.where('director LIKE ?', "%#{params[:search]}%")
-      if params[:runtime] != "any"
-        return search.where('runtime_in_minutes BETWEEN ? AND ?', "#{params[:runtime].split.first.to_i}","#{params[:runtime].split.last.to_i}")  
-      end  
-      return search
-    else
-     search = @search.where('title OR director LIKE ?', "%#{params[:search]}%")
-    end
+    # @search = Movie.all
+    # if (params[:category] == "Title") && (params[:search].present?)
+    #   search = @search.where('title LIKE ?', "%#{params[:search]}%")
+    #   if params[:runtime] != "any"
+    #     return search.where('runtime_in_minutes BETWEEN ? AND ?', "#{params[:runtime].split.first.to_i}","#{params[:runtime].split.last.to_i}") if params[:runtime] != "any"
+    #   end
+    #   return search
+    # elsif (params[:category] == "Director") && (params[:search].present?)
+    #   search = @search.where('director LIKE ?', "%#{params[:search]}%")
+    #   if params[:runtime] != "any"
+    #     return search.where('runtime_in_minutes BETWEEN ? AND ?', "#{params[:runtime].split.first.to_i}","#{params[:runtime].split.last.to_i}")  
+    #   end  
+    #   return search
+    # else
+    #  search = @search.where('title OR director LIKE ?', "%#{params[:search]}%")
+    # end
   end
 
   protected

@@ -8,6 +8,7 @@
 		<h3> User <%=	user.id %> 
 		<h4><%= names_to_string(user.firstname, user.lastname) %></h4>
 		<h4><%= user.email %></h4>
+		<h4><%= user.admin %>
 		<h4><%= link_to "Delete user", user, method: :delete  %></h4>	
 		<hr>	
 	<% end %>

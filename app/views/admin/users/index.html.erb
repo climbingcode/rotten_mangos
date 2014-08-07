@@ -8,10 +8,15 @@
 <% @users.each do |user|%>
 <% if user != current_user %>
 		<h3> User <%=	user.id %> 
-		<h4><%= names_to_string(user.firstname, user.lastname) %></h4>
+		<h4><%= user.firstname %> <%= user.lastname.capitalize %></h4>
 		<h4><%= user.email %></h4>
+		<% if user.admin == true %>
+		<h5>This user has admin privileges</h5>
+		<% end %>
 		<h6><%= link_to "Delete user", user, method: :delete  %> | <%= link_to "Edit User", edit_admin_user_path(user) %></h6>	
 		<hr>	
 	<% end %>
 <% end %>
 <%= paginate @users %>
+
+<h2><%= link_to "Back to movies", movies_path %></h2>

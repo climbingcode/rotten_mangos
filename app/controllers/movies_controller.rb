@@ -1,8 +1,21 @@
 class MoviesController < ApplicationController
   
   def index
-		@movies = Movie.search(params)
+    @movies = Movie.all
+    if params[:category] != "any" && params[:search].present?
+      @movies = @movies.category_search(params[:search])
+      if params[:runtime] != "any" 
+        @movies = @movies.runtime(params[:runtime])
+      end
+    end
 
+    if params[:runtime] != "any" && params[:category] == "any"
+      @movies = @movies.runtime(params[:runtime])
+    end
+
+    if params[:search].present? && params[:category] == "any" && params[:runtime] == "any"
+      @movies = @movies.category_search(params[:search])
+    end
     # @uploader.retrieve_from_store!('my_file.png')
   end
 
