@@ -17,7 +17,10 @@ class MoviesController < ApplicationController
     if params[:search].present? && params[:category] == "any" && params[:runtime] == "any"
       @movies = @movies.category_search(params[:search])
     end
-    # @uploader.retrieve_from_store!('my_file.png')
+
+    if params[:kind] != "all"
+      @movies = @movies.where(category: params[:kind])
+    end
   end
 
   def show
@@ -34,8 +37,9 @@ class MoviesController < ApplicationController
 
  def create
     @movie = Movie.new(movie_params)
+    @movie.update(category: params[:category])
 
-    if @movie.save
+    if @movie.save 
       redirect_to movies_path, notice: "#{@movie.title} was submitted successfully!"
     else
       render :new
@@ -46,7 +50,9 @@ class MoviesController < ApplicationController
   def update 
   	@movie = Movie.find(params[:id])  
 
-  	if @movie.update_attributes(movie_params)
+  	if  @movie.update_attributes(movie_params)
+        @movie.update(category: params[:category])
+        @movie.save
   		redirect_to movie_path(@movie)
   	else
 			render :edit

@@ -1,45 +1,62 @@
 <div class="title_search container">
-	<h1>Rotten Mangoes</h1>
-	<%= link_to "Submit a movie!", new_movie_path %>
-	<% if current_user %>
-		  <p>Signed in as <%= current_user.full_name %> (<%= link_to "Log out", session_path("current"), method: :delete %>)</p>
-	  	<% if user_is_admin?(current_user) %>
-	   		<%= link_to "admin panel", admin_users_path %>
-	  	<% end %>
-		<% else %>
-	  <%= link_to "Log In", new_session_path %> | <%= link_to "Sign Up", new_user_path %>
+	<h1 class="title">Rotten Mangoes</h1>
+<div class="row">
+	<section class="col-sm-6">
+		<h4 class="color_submit"><%= link_to "Submit a movie!", new_movie_path %></h4>
+		<% if current_user %>
+			  <h4>Signed in as <%= current_user.full_name %> (<%= link_to "Log out", session_path("current"), method: :delete %>)</h4>
+		  	<% if user_is_admin?(current_user) %>
+		   		<h4 class="color_submit"><%= link_to "admin panel", admin_users_path %></h4>
+		  	<% end %>
+			<% else %>
+		  	<%= link_to "Log In", new_session_path %> | <%= link_to "Sign Up", new_user_path %>
+			<% end %>
+
+
+		<%= form_tag movies_path, :method => 'get' do %>
+			<h4>Search Movies</h4>
+			<p><%= select_tag :category, options_for_select(["any",'Director', 'Title']) %>
+				<%= select_tag :runtime, options_for_select([["any", "any"], ["Under 90 min", "0 90"], ["Between 90 and 120 minutes", "91 120", ], ["Over 120 minutes", "121 1000"]])%>
+				<%= text_field_tag	:search, params[:search] %>
+				<%= submit_tag "Search", :name => nil %>
+			</p>
 		<% end %>
 
+		<div class="search_bars">
+			<%= form_tag profile_users_path, :method => 'get' do %>
+				<h4>Search User Profile</h4>
+				<%= text_field_tag :profile, params[:search] %> 
+				<%= submit_tag "Search", :name => nil %>
+			<% end %>
+		</div>
+		
+		<div class="search_profile">
+			<%= form_tag movies_path, :method => 'get' do %>
+			<h4>Filter By Category</h4>	
+			<%= select_tag :kind, options_for_select(['all', 'comedy', 'action', 'romance', 'drama', 'horror']) %>
+			<%= submit_tag "Filter", :name => nil %>
+			<% end %>
+		</div>
+	</section>	
 
-	<%= form_tag movies_path, :method => 'get' do %>
-		<h4>Search Movies</h4>
-		<p><%= select_tag :category, options_for_select(["any",'Director', 'Title']) %>
-			<%= select_tag :runtime, options_for_select([["any", "any"], ["Under 90 min", "0 90"], ["Between 90 and 120 minutes", "91 120", ], ["Over 120 minutes", "121 1000"]])%>
-			<%= text_field_tag	:search, params[:search] %>
-			<%= submit_tag "Search", :name => nil %>
-		</p>
-	<% end %>
 
-	<%= form_tag profile_users_path, :method => 'get' do %>
-		<h4>Search User Profile</h4>
-		<%= text_field_tag :profile, params[:search] %> 
-		<%= submit_tag "Search", :name => nil %>
-	<% end %>
-</div>
-
-
+<div class="col-sm-3 pull-right profile_pic_wrapper">
 	<% if current_user %>
 		<% if current_user.photo.present? %>
-		<div class="profile_pic pull-right well">
+		
+		<div class="profile_pic  well ">
 			<%= image_tag @user.photo_url(:thumb).to_s %>
 		<h5><%= link_to "edit your profile", edit_profile_user_path(current_user.id) %></h5>
+
 	<% end %>
 		</div>
 <% end %>
+</div>
+</div><!--row-->
 
-<div class="container">
+<div class="movie_panel container col-sm-3">
 	<h2><% @movies.each do |movie| %><h2>
-		<%= render partial: "movie", locals: {movie: movie} %><hr>
+		<%= render partial: "movie", locals: {movie: movie} %>
 	<% end %>
 </div>
 

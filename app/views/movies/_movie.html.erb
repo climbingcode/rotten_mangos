@@ -3,7 +3,7 @@
 
 
 			<div class="comment_well well pull-right col-sm-8" >
-				<h4><%= link_to "write a review for this #{movie.title.capitalize}", new_movie_review_path(movie) %></h4>
+				<h5><%= link_to "write a review for this #{movie.title.capitalize}", new_movie_review_path(movie) %></h5>
 			 		<% movie.reviews.each do |review| %>
 			 			<h6> <%=link_to "Posted By #{review.user.firstname.capitalize}", profile_user_path(review.user)  %></h6>
 			 			<h6><%= review.text %></h6>
@@ -12,13 +12,16 @@
 			</div>
 
 			<h2><%= link_to movie.title, movie_path(movie) %></h2>
+			<h6><%= movie.category %></h6> 
 		  <%= image_tag movie.movieposter_url(:thumb).to_s %>
 		  <h3><%= movie.release_date %></h3>
-		  <h4>Dir. <%= movie.director %> | <%= movie.runtime_in_minutes %> minutes</h4>
-		  <h6 class=""><%= movie.description %></h6>
+		  <h5>Dir. <%= movie.director %> | <%= movie.runtime_in_minutes %> minutes</h5>
+		  <h6><%= movie.description %></h6>
 			
 			<div>
-				<h3>Average review out of <%= movie.review_average %> / 10</h3>
+				<% if movie.review_average.present? %>
+					<h3>Average review out of <%= movie.review_average %> / 10</h3>
+				<% end %>
 			</div>
 
 		</div>

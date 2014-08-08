@@ -14,10 +14,11 @@
  *= require_self
  */
 
-.title_search {
-	margin-left: 20px;
-}
 
-.profile_pic {
+/*.profile_pic {
 	margin-top: -250px;
+}*/
+
+body {
+	background-color: #00688B;
 }
