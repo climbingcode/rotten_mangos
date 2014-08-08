@@ -1,0 +1,16 @@
+
+<h2><%= @user.firstname.capitalize %> <%= @user.lastname.capitalize %></h2>
+
+<div class="profile_well well">
+<%= image_tag @user.photo_url(:display).to_s%>
+</div>
+
+<h4>Reviews</h4><hr>
+	<% @user.reviews.each do |review| %>
+	<h5><%= review.movie.title %></h5>
+	<h6><%= @user.firstname.capitalize %> gave this <%= review.rating_out_of_ten.to_s %> out of 10</h6>
+	<p>Comment</p>
+	<p><%= review.text %></p><hr>
+<% end %>
+
+<h4><%= link_to "Go back to movies", movies_path %></h4>

@@ -1,6 +1,7 @@
 class MoviesController < ApplicationController
   
   def index
+    @user = current_user
     @movies = Movie.all
     if params[:category] != "any" && params[:search].present?
       @movies = @movies.category_search(params[:search])
@@ -9,7 +10,7 @@ class MoviesController < ApplicationController
       end
     end
 
-    if params[:runtime] != "any" && params[:category] == "any"
+    if params[:runtime] != "any" && params[:category] == "any" 
       @movies = @movies.runtime(params[:runtime])
     end
 
@@ -43,8 +44,7 @@ class MoviesController < ApplicationController
 
 
   def update 
-  	@movie = Movie.find(params[:id])
-    binding.pry
+  	@movie = Movie.find(params[:id])  
 
   	if @movie.update_attributes(movie_params)
   		redirect_to movie_path(@movie)

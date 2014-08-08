@@ -1,5 +1,5 @@
-<h1>Sign Up</h1>
-<%= form_for @user do |f| %>
+<h1>Edit Your Profile</h1>
+<%= form_for [:profile, @user] do |f| %>
   <% if @user.errors.any? %>
     <div>
       <%= pluralize(@user.errors.count, "error") %> prevented the account from being created:
@@ -39,3 +39,5 @@
   </div>
   <div><%= f.submit "Submit" %></div>
 <% end %>
+
+<h6><%= link_to "Back to Movies", movies_path %></h6>

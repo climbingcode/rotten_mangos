@@ -28,11 +28,13 @@ class Movie < ActiveRecord::Base
   mount_uploader :movieposter, MoviePosterUploader
 
   def review_average
-    reviews.sum(:rating_out_of_ten)/reviews.size
+    if self.reviews.present?
+      reviews.sum(:rating_out_of_ten)/reviews.size
+    end
   end
 
 
-  def self.search(params)
+  # def self.search(params)
     # @search = Movie.all
     # if (params[:category] == "Title") && (params[:search].present?)
     #   search = @search.where('title LIKE ?', "%#{params[:search]}%")
@@ -49,7 +51,7 @@ class Movie < ActiveRecord::Base
     # else
     #  search = @search.where('title OR director LIKE ?', "%#{params[:search]}%")
     # end
-  end
+  # end
 
   protected
 

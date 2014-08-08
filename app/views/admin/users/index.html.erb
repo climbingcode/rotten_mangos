@@ -8,7 +8,8 @@
 <% @users.each do |user|%>
 <% if user != current_user %>
 		<h3> User <%=	user.id %> 
-		<h4><%= user.firstname %> <%= user.lastname.capitalize %></h4>
+		<h4><%=link_to user.firstname, edit_session_path(user) %> 
+		<%= link_to user.lastname.capitalize, edit_session_path(user)	 %></h4>
 		<h4><%= user.email %></h4>
 		<% if user.admin == true %>
 		<h5>This user has admin privileges</h5>

@@ -8,8 +8,11 @@
     <% else %>
       <%= link_to "Log In", new_session_path %> | <%= link_to "Sign Up", new_user_path %> | 
       <% end %>
-			
-       
+    <% if current_user %>
+      <% if session[:fake]  %>
+        <%= link_to "Go Back To Admin Panel", admin_user_path(session[:fake])  %>
+      <% end %>			
+    <% end %>   
   </small>
 
 </footer>

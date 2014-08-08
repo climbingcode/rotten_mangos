@@ -1,25 +1,46 @@
+<div class="title_search container">
+	<h1>Rotten Mangoes</h1>
+	<%= link_to "Submit a movie!", new_movie_path %>
+	<% if current_user %>
+		  <p>Signed in as <%= current_user.full_name %> (<%= link_to "Log out", session_path("current"), method: :delete %>)</p>
+	  	<% if user_is_admin?(current_user) %>
+	   		<%= link_to "admin panel", admin_users_path %>
+	  	<% end %>
+		<% else %>
+	  <%= link_to "Log In", new_session_path %> | <%= link_to "Sign Up", new_user_path %>
+		<% end %>
 
-<%= form_tag movies_path, :method => 'get' do %>
 
-	<p><%= select_tag :category, options_for_select(["any",'Director', 'Title']) %>
-		<%= select_tag :runtime, options_for_select([["any", "any"], ["Under 90 min", "0 90"], ["Between 90 and 120 minutes", "91 120", ], ["Over 120 minutes", "121 1000"]])%>
-		<%= text_field_tag	:search, params[:search] %>
+	<%= form_tag movies_path, :method => 'get' do %>
+		<h4>Search Movies</h4>
+		<p><%= select_tag :category, options_for_select(["any",'Director', 'Title']) %>
+			<%= select_tag :runtime, options_for_select([["any", "any"], ["Under 90 min", "0 90"], ["Between 90 and 120 minutes", "91 120", ], ["Over 120 minutes", "121 1000"]])%>
+			<%= text_field_tag	:search, params[:search] %>
+			<%= submit_tag "Search", :name => nil %>
+		</p>
+	<% end %>
+
+	<%= form_tag profile_users_path, :method => 'get' do %>
+		<h4>Search User Profile</h4>
+		<%= text_field_tag :profile, params[:search] %> 
 		<%= submit_tag "Search", :name => nil %>
-	</p>
+	<% end %>
+</div>
+
+
+	<% if current_user %>
+		<% if current_user.photo.present? %>
+		<div class="profile_pic pull-right well">
+			<%= image_tag @user.photo_url(:thumb).to_s %>
+		<h5><%= link_to "edit your profile", edit_profile_user_path(current_user.id) %></h5>
+	<% end %>
+		</div>
 <% end %>
 
-
-<h1>Rotten Mangoes</h1>
-<%= link_to "Submit a movie!", new_movie_path %>
-<hr>
-<% @movies.each do |movie| %><h2>
-	<%= link_to movie.title, movie_path(movie) %></h2>
-  <%= image_tag movie.movieposter_url(:thumb).to_s %>
-  <h3><%= movie.release_date %></h3>
-  <h4>Dir. <%= movie.director %> | <%= movie.runtime_in_minutes %> minutes</h4>
-  <p><%= movie.description %></p>
+<div class="container">
+	<h2><% @movies.each do |movie| %><h2>
+		<%= render partial: "movie", locals: {movie: movie} %><hr>
+	<% end %>
+</div>
 
 
-  <p>
-  <hr>
-<% end %>

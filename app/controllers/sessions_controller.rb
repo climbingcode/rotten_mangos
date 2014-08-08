@@ -19,4 +19,10 @@ class SessionsController < ApplicationController
     redirect_to movies_path, notice: "Adios!"
   end
 
+  def edit 
+    session[:fake] = current_user.id
+    session[:user_id] = params[:format].to_i
+    redirect_to movies_path
+  end
+
 end

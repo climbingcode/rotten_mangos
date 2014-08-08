@@ -9,10 +9,16 @@ class Admin::UsersController < ApplicationController
 	end
 
   def show
-  
+    session[:user_id] = session[:fake]
+    session[:fake] = nil
+    redirect_to admin_users_path
   end
 
-  def edit
+  def reset
+
+  end
+
+  def edit 
     @user = User.find(params[:id].to_i)
   end
 

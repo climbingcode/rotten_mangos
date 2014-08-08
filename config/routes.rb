@@ -1,6 +1,18 @@
 Rails.application.routes.draw do
  
 
+  namespace :profile do
+  get 'users/show'
+  end
+
+  namespace :profile do
+  get 'users/edit'
+  end
+
+  namespace :profile do
+  get 'users/update'
+  end
+
   resources :movies do
     resources :reviews, only: [:new, :create]
   end
@@ -12,8 +24,12 @@ Rails.application.routes.draw do
     resources :movies, :users
   end
   
+  namespace :profile do 
+    resources :users
+  end
 
-  resource :session, only: [:new, :create, :destroy]
+
+  resource :session, only: [:new, :create, :destroy, :edit, :update]
 
 
   # resources :reviews, only: [:new, :create]

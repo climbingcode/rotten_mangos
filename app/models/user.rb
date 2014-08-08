@@ -4,6 +4,8 @@ class User < ActiveRecord::Base
 
 	has_many :reviews 
 
+	mount_uploader :photo, ProfilePhotoUploader
+
 	  def full_name
     "#{firstname} #{lastname}"
   end

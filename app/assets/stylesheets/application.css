@@ -13,3 +13,11 @@
  *= require_tree .
  *= require_self
  */
+
+.title_search {
+	margin-left: 20px;
+}
+
+.profile_pic {
+	margin-top: -250px;
+}

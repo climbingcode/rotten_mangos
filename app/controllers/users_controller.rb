@@ -37,19 +37,19 @@ class UsersController < ApplicationController
 
     if params[:admin] == "1"
         @user.admin = true
+    else 
+        @user.admin = false 
     end 
+
     @user.save
-
-    
     redirect_to admin_users_path
-
   end
 
 
   protected 
 
   def user_params
-    params.require(:user).permit(:email, :firstname, :lastname, :password, :password_confirmation)
+    params.require(:user).permit(:email, :firstname, :lastname, :password, :password_confirmation, :photo)
   end
 
 end

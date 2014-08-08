@@ -22,10 +22,21 @@
   <div>
     <%= f.label "lastname", "Last Name" %><br>
     <%= f.text_field "lastname" %>
-  </div>
+  </div> 
+
   <div>
-    <%= f.label "admin", "admin" %>
-    <%= check_box_tag 'admin' %><br>
+    <%= f.label "Add Your Photo" %><br>
+    <%= f.file_field :photo %>
+  </div>
+
+  <div>
+    <%= f.label "password" %><br>
+    <%= f.password_field "password" %>
+  </div>
+
+  <div>
+    <%= f.label "password_confirmation" %><br>
+    <%= f.password_field "password_confirmation" %>
   </div>
   <div><%= f.submit "Submit" %></div>
 <% end %>
